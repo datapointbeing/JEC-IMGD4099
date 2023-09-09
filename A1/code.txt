@@ -1,0 +1,96 @@
+// adapted from IQ - https://www.shadertoy.com/view/ldl3W8
+fn hashNoise(p : vec2f) -> vec2f {
+  //return vec2f(1.0, 1.0);
+  //var y : vec3f = video(p);
+  //return vec2f(p.x, p.y);
+  return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
+}
+
+// adapted from IQ - https://www.shadertoy.com/view/ldl3W8
+fn voronoi(x : vec2f) -> vec3f
+{
+  var n : vec2f = floor(x);
+  var f : vec2f = fract(x);
+
+  var minG : vec2f;
+  var minR : vec2f;
+
+  var minDist = 8.0;
+  for(var j=-1; j<=1; j++)
+  {
+    for(var i=-1; i<=1; i++)
+    {
+      var g : vec2f = vec2f(f32(i), f32(j));
+      var offset : vec2f = hashNoise(n + g);
+
+      offset = 0.5 + 0.5 * sin((seconds()) * (audio.x/10.) + (6.2831 * offset));
+
+      var r : vec2f = g + offset - f;
+      let dist = dot(r, r);
+
+      if(dist < minDist)
+      {
+        minDist = dist;
+        minR = r;
+        minG = g;
+      }
+    }
+  }
+
+  // distance to borders
+  minDist = 8.0;
+  for(var j = -2; j <= 2; j++)
+  {
+    for(var i = -2; i <= 2; i++)
+    {
+      var g : vec2f = minG + vec2f(f32(i), f32(j));
+      var offset : vec2f = hashNoise(n + g);
+        
+      offset = 0.5 + 0.5 * sin((seconds()) * (audio.x/10.) + (6.2831 * offset));
+
+      var r : vec2f = g + offset - f;
+
+      if(dot(minR - r, minR - r) > 0.00001)
+      {
+        minDist = min(minDist, dot(0.5*(minR+r), normalize(r-minR)));
+      }
+    }
+  }
+
+  return vec3f(minDist, minR);
+}
+
+@fragment 
+fn fs( @builtin(position) pos : vec4f ) -> @location(0) vec4f {
+  let density = seconds()/2;
+  
+  // get normalized texture coordinates (aka uv) in range 0-1
+  var p : vec2f = uvN( pos.xy );
+  p.y = p.y*0.7;
+  //return vec4f( voronoi(20.*p), 1.);
+
+  var c : vec3f = voronoi(density*p);
+
+  //var col : vec3f = c.x*(0.5 + 0.5*sin(64.0*c.x))*vec3f(1.0);
+  var col : vec3f = video(vec2f(c.y + 0.5, 0.5-c.z)).xyz;
+  
+  var coinSample : vec2f = vec2f(1.0 - (p.x + (c.y/density)), p.y + (c.z/density));
+  var coinColor : vec3f = (video(coinSample).xyz * 0.75) + 0.2;
+
+  let val = max(col.x, max(col.y, col.z)) + (0.3 * (noise2(c.yz) - 0.5));
+  col = vec3f(val, val, val);
+
+  let coinWave = (((sin(((p.y + coinSample.y)*1400.) - sin((p.x + coinSample.x)*300.)) / 2.) + 0.5) * 0.5) + 0.2;
+  col = smoothstep(vec3(0.8, 0.8, 0.8), vec3(1.0,1.0,1.0), col + coinWave);
+  col = col * (1.0 - ((1. - c.x) * 0.5) * (1. - c.z));
+  col *= coinColor * (2 + (1.5 * audio[0]));
+  col += (step(vec3(0.9, 0.9, 0.9), 1.0 - col)) * (coinColor/2.);
+
+  // borders
+  col = mix( vec3f(p.y/2,p.y/2,p.y/2), col, step( 0.07, c.x ));
+  col = mix( coinColor, col, max(smoothstep( 0.07, 0.1, c.x ), smoothstep( 0.05, 0.02, c.x )) );
+  col = mix( coinColor/2, col, max(smoothstep( 0.13, 0.14, c.x ), smoothstep( 0.09, 0.06, c.x )) );
+
+  return vec4f(col,1.0);
+  //return video(vec2f(v.x, v.y));
+}
