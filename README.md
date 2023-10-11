@@ -13,3 +13,9 @@ John (Eddy) Carrotta's projects for IMGD4099 (Graphics).
 
 ## ASST 4:
 [PROJECT](https://datapointbeing.github.io/JEC-IMGD4099-A4/) - [REPO](https://github.com/DataPointBeing/JEC-IMGD4099-A4) - [EXPLANATION](https://github.com/DataPointBeing/JEC-IMGD4099/blob/main/A4/writeup.md)
+
+## ASST 5:
+TODO
+
+## ASST FINAL:
+[PROJECT](https://datapointbeing.github.io/JEC-IMGD4099-FINAL/) - [REPO](https://github.com/DataPointBeing/JEC-IMGD4099-FINAL) - [EXPLANATION](https://github.com/DataPointBeing/JEC-IMGD4099/blob/main/FINAL/writeup.md)
