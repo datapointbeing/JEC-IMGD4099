@@ -11,3 +11,7 @@ But inspired by Milo's method of using a balance board's alignment to interfere 
 ![Screenshot 2023-10-12 001044](https://github.com/DataPointBeing/JEC-IMGD4099/assets/39743767/2dc44c6e-8df8-45f7-8d9c-d77372c8ab30)
 ![Screenshot 2023-10-12 000335](https://github.com/DataPointBeing/JEC-IMGD4099/assets/39743767/f8711ca3-cb44-45bd-b49f-4293bf3310e5)
 ![Screenshot 2023-10-11 071959](https://github.com/DataPointBeing/JEC-IMGD4099/assets/39743767/7f1cc629-9aec-4a76-b197-70cd863a1f11)
+![image](https://github.com/DataPointBeing/JEC-IMGD4099/assets/39743767/23373b20-575a-44df-bf2f-dcb3a33c86d1)
+![image](https://github.com/DataPointBeing/JEC-IMGD4099/assets/39743767/40e0abb3-3389-4aa1-a9cb-c8e79d2451a0)
+
+
