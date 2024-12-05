@@ -1,5 +1,5 @@
 # JEC-IMGD4099
-John Edward (Ed) Carrotta's projects for IMGD4099 (Graphics).
+John Edward Carrotta's projects for IMGD4099 (Graphics).
 <br><br>
 
 ## ASST 1:
